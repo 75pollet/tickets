@@ -22,6 +22,4 @@ defmodule Tickets.Promocode.Ticket do
     |> validate_required([:amount, :venue, :date, :radius, :expired, :status])
     |> put_change(:promocode, UUID.uuid1())
   end
-
-
 end

@@ -5,7 +5,6 @@ defmodule Tickets.Promocode do
   alias Tickets.Promocode.Ticket
   alias Tickets.Repo
 
-
   @doc """
   create_ticket/1 creates a single ticket in the database
   """

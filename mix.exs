@@ -41,6 +41,7 @@ defmodule Tickets.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:cowboy, "~> 2.5"},
+      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
       {:plug_cowboy, "~> 2.1"}
     ]
   end
@@ -55,7 +56,12 @@ defmodule Tickets.MixProject do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      check_lint: [
+        "compile --warnings-as-errors --force",
+        "credo --strict",
+        "format --check-formatted"
+      ]
     ]
   end
 end

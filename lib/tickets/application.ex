@@ -11,7 +11,7 @@ defmodule Tickets.Application do
       # Start the Ecto repository
       Tickets.Repo,
       # Start the endpoint when the application starts
-      TicketsWeb.Endpoint,
+      TicketsWeb.Endpoint
       # Starts a worker by calling: Tickets.Worker.start_link(arg)
       # {Tickets.Worker, arg},
     ]

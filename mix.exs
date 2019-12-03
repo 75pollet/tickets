@@ -6,9 +6,9 @@ defmodule Tickets.MixProject do
       app: :tickets,
       version: "0.1.0",
       elixir: "~> 1.5",
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
     ]
@@ -26,7 +26,7 @@ defmodule Tickets.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -34,7 +34,8 @@ defmodule Tickets.MixProject do
   defp deps do
     [
       {:phoenix, github: "phoenixframework/phoenix", override: true},
-      {:phoenix_pubsub, "~> 2.0-dev", [env: :prod, git: "https://github.com/phoenixframework/phoenix_pubsub.git"]},
+      {:phoenix_pubsub, "~> 2.0-dev",
+       [env: :prod, git: "https://github.com/phoenixframework/phoenix_pubsub.git"]},
       {:phoenix_ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},

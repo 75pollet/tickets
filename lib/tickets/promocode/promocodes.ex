@@ -20,8 +20,10 @@ defmodule Tickets.Promocode do
   """
   @spec generate_event_tickets(map()) :: [%Ticket{}, ...]
   def generate_event_tickets(%{"number_of_tickets" => number} = attr) do
-    Enum.map(1..number, fn _n ->
-      create_ticket(attr)
+    Repo.transaction(fn ->
+      Enum.map(1..number, fn _n ->
+        create_ticket(attr)
+      end)
     end)
   end
 end

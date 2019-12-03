@@ -23,12 +23,14 @@ defmodule Tickets.TicketTest do
   test "generate_event_tickets/1 creates as many tickets as specified by the user", %{
     attrs: attrs
   } do
-    tickets = attrs |> Map.put("number_of_tickets", 5) |> Promocode.generate_event_tickets()
+    {:ok, tickets} =
+      attrs |> Map.put("number_of_tickets", 5) |> Promocode.generate_event_tickets()
+
     assert 5 == Enum.count(tickets)
   end
 
   test "each ticket created has a unique promocode", %{attrs: attrs} do
-    [ticket1 | [ticket2]] =
+    {:ok, [ticket1 | [ticket2]]} =
       attrs |> Map.put("number_of_tickets", 2) |> Promocode.generate_event_tickets()
 
     refute ticket1.promocode == ticket2.promocode

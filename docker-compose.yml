@@ -1,0 +1,25 @@
+version: "3"
+services:
+  db:
+    image: postgres:10.1
+    restart: always
+    environment:
+      POSTGRES_USER:  "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5430:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    image: tickets
+    environment:
+      - TERM=xterm-256color
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

@@ -26,13 +26,13 @@ defmodule TicketsWeb.ConnCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Tickets.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Tickets.Repo, {:shared, self()})
     end
+
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
-
 end

@@ -10,7 +10,8 @@ defmodule Tickets.TicketTest do
       "amount" => 50.0,
       "venue" => "kisumu hotel",
       "date" => "2015-01-23",
-      "radius" => 50
+      "radius" => 50,
+      "status" => "active"
     }
 
     [attrs: ticket_attrs]
@@ -36,11 +37,24 @@ defmodule Tickets.TicketTest do
     refute ticket1.promocode == ticket2.promocode
   end
 
-  test "all_promocodes returns a list of all promocodes", %{attrs: attrs} do
+  test "all_promocodes/0 returns a list of all promocodes", %{attrs: attrs} do
     attrs |> Map.put("number_of_tickets", 6) |> Promocode.generate_event_tickets()
 
     [_h | _t] = Promocode.all_promocodes()
 
     assert 6 == Promocode.all_promocodes() |> Enum.count()
+  end
+
+  test "active_promocodes/0 returns a list of active promocodes", %{attrs: attrs} do
+    attrs |> Map.put("number_of_tickets", 6) |> Promocode.generate_event_tickets()
+
+    %{attrs | "status" => "inactive"}
+    |> Map.put("number_of_tickets", 4)
+    |> Promocode.generate_event_tickets()
+
+    [_h | _t] = Promocode.active_promocodes()
+
+    assert 6 == Promocode.active_promocodes() |> Enum.count()
+    refute 10 == Promocode.active_promocodes() |> Enum.count()
   end
 end

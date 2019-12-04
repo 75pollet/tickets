@@ -12,4 +12,8 @@ defmodule TicketsWeb.TicketView do
   def render("all_promocodes.json", %{all_promocodes: all_promocodes}) do
     all_promocodes
   end
+
+  def render("active_promocodes.json", %{active_promocodes: active_promocodes}) do
+    active_promocodes
+  end
 end

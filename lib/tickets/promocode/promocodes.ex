@@ -40,4 +40,13 @@ defmodule Tickets.Promocode do
     q = from t in Ticket, select: t.promocode
     Repo.all(q)
   end
+
+  @doc """
+  returns a list of active promocodes
+  """
+  @spec active_promocodes :: list()
+  def active_promocodes do
+    q = from t in Ticket, where: t.status == "active", select: t.promocode
+    Repo.all(q)
+  end
 end

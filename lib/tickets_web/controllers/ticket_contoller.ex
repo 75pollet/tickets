@@ -13,4 +13,12 @@ defmodule TicketsWeb.TicketController do
     all_promocodes = Promocode.all_promocodes()
     conn |> put_status(:ok) |> render("all_promocodes.json", all_promocodes: all_promocodes)
   end
+
+  def active(conn, _params) do
+    active_promocodes = Promocode.active_promocodes()
+
+    conn
+    |> put_status(:ok)
+    |> render("active_promocodes.json", active_promocodes: active_promocodes)
+  end
 end

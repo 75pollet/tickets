@@ -10,5 +10,6 @@ defmodule TicketsWeb.Router do
 
     post "/generate_tickets", TicketController, :create
     get "/promocodes", TicketController, :index
+    get "/promocodes/active", TicketController, :active
   end
 end

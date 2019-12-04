@@ -25,6 +25,17 @@ defmodule Tickets.TicketControllerTest do
     assert json_response(conn, 201) == render_json(TicketView, "create.json", conn.assigns)
   end
 
+  test "a list of promocodes available can be gotten", %{conn: conn} do
+    conn =
+      get(
+        conn,
+        Routes.ticket_path(conn, :index)
+      )
+
+    assert json_response(conn, 200) ==
+             render_json(TicketView, "all_promocodes.json", conn.assigns)
+  end
+
   defp render_json(module, template, assigns) do
     assigns = Map.new(assigns)
 

@@ -9,5 +9,6 @@ defmodule TicketsWeb.Router do
     pipe_through :api
 
     post "/generate_tickets", TicketController, :create
+    get "/promocodes", TicketController, :index
   end
 end

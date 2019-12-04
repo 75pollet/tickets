@@ -4,6 +4,7 @@ defmodule Tickets.Promocode do
   """
   alias Tickets.Promocode.Ticket
   alias Tickets.Repo
+  import Ecto.Query
 
   @doc """
   create_ticket/1 creates a single ticket in the database
@@ -29,5 +30,14 @@ defmodule Tickets.Promocode do
         create_ticket(attr)
       end)
     end)
+  end
+
+  @doc """
+  returns a list of all promocodes
+  """
+  @spec all_promocodes :: list()
+  def all_promocodes do
+    q = from t in Ticket, select: t.promocode
+    Repo.all(q)
   end
 end

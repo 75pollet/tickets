@@ -7,6 +7,7 @@ defmodule Tickets.Promocode.Ticket do
     field :date, :date
     field :expired, :boolean, default: false
     field :number_of_tickets, :float, virtual: true
+    field :number_of_rides, :integer, default: 1
     field :radius, :float
     field :status, :string, default: "active"
     field :venue, :string
@@ -18,7 +19,16 @@ defmodule Tickets.Promocode.Ticket do
   @doc false
   def changeset(ticket, attrs) do
     ticket
-    |> cast(attrs, [:amount, :venue, :date, :radius, :expired, :status, :promocode])
+    |> cast(attrs, [
+      :amount,
+      :venue,
+      :number_of_rides,
+      :date,
+      :radius,
+      :expired,
+      :status,
+      :promocode
+    ])
     |> validate_required([:amount, :venue, :date, :radius, :expired, :status])
     |> put_change(:promocode, UUID.uuid1())
   end

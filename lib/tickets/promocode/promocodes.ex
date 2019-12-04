@@ -19,6 +19,10 @@ defmodule Tickets.Promocode do
   generate_event_tickets/1 generates the number of tickets specified by the user
   """
   @spec generate_event_tickets(map()) :: [%Ticket{}, ...]
+  def generate_event_tickets(%{"number_of_tickets" => number} = attr) when is_bitstring(number) do
+    %{attr | "number_of_tickets" => number |> String.to_integer()} |> generate_event_tickets()
+  end
+
   def generate_event_tickets(%{"number_of_tickets" => number} = attr) do
     Repo.transaction(fn ->
       Enum.map(1..number, fn _n ->

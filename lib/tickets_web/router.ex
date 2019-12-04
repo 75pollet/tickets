@@ -7,5 +7,7 @@ defmodule TicketsWeb.Router do
 
   scope "/api", TicketsWeb do
     pipe_through :api
+
+    post "/generate_tickets", TicketController, :create
   end
 end

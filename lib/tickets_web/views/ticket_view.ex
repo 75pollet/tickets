@@ -8,4 +8,8 @@ defmodule TicketsWeb.TicketView do
   def render("create.json", %{success: false}) do
     %{result: "failure"}
   end
+
+  def render("all_promocodes.json", %{all_promocodes: all_promocodes}) do
+    all_promocodes
+  end
 end

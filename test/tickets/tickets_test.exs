@@ -35,4 +35,12 @@ defmodule Tickets.TicketTest do
 
     refute ticket1.promocode == ticket2.promocode
   end
+
+  test "all_promocodes returns a list of all promocodes", %{attrs: attrs} do
+    attrs |> Map.put("number_of_tickets", 6) |> Promocode.generate_event_tickets()
+
+    [_h | _t] = Promocode.all_promocodes()
+
+    assert 6 == Promocode.all_promocodes() |> Enum.count()
+  end
 end

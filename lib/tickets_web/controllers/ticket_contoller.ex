@@ -8,4 +8,9 @@ defmodule TicketsWeb.TicketController do
       _ -> conn |> put_status(:unprocessable_entry) |> render("error.json", success: false)
     end
   end
+
+  def index(conn, _params) do
+    all_promocodes = Promocode.all_promocodes()
+    conn |> put_status(:ok) |> render("all_promocodes.json", all_promocodes: all_promocodes)
+  end
 end

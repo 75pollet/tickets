@@ -32,4 +32,19 @@ defmodule Tickets.Promocode.Ticket do
     |> validate_required([:amount, :venue, :date, :radius, :expired, :status])
     |> put_change(:promocode, UUID.uuid1())
   end
+
+  def update_changeset(ticket, attrs) do
+    ticket
+    |> cast(attrs, [
+      :amount,
+      :venue,
+      :number_of_rides,
+      :date,
+      :radius,
+      :expired,
+      :status,
+      :promocode
+    ])
+    |> validate_required([:amount, :venue, :date, :radius, :expired, :status])
+  end
 end

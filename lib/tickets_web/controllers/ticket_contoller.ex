@@ -46,4 +46,18 @@ defmodule TicketsWeb.TicketController do
     |> put_status(422)
     |> render("validity.json", valid: "false", reason: "wrong arguments given")
   end
+
+  def edit(conn, %{"promocode" => promocode}) do
+    case Promocode.deactivate_ticket(promocode) do
+      nil ->
+        conn
+        |> put_status(422)
+        |> render("deactivate.json", status: "promocode does not exist")
+
+      ticket ->
+        conn
+        |> put_status(200)
+        |> render("deactivate.json", status: "successful", data: ticket)
+    end
+  end
 end

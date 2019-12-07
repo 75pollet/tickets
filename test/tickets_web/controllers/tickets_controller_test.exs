@@ -81,6 +81,17 @@ defmodule Tickets.TicketControllerTest do
              render_json(TicketView, "validity.json", conn.assigns)
   end
 
+  test "a promocode can be deactivated", %{conn: conn, ticket: ticket} do
+    conn =
+      put(
+        conn,
+        "/api/promocode/deactivate/#{ticket.promocode}"
+      )
+
+    assert json_response(conn, 200) ==
+             render_json(TicketView, "deactivate.json", conn.assigns)
+  end
+
   defp render_json(module, template, assigns) do
     assigns = Map.new(assigns)
 

@@ -60,4 +60,20 @@ defmodule Tickets.Promocode do
       code -> code.radius >= distance
     end
   end
+
+  @doc """
+  deactivate ticket status
+  """
+  @spec deactivate_ticket(String.t()) :: {:ok, %Ticket{}} | {:error, Ecto.Changeset.t()} | nil
+  def deactivate_ticket(promocode) do
+    case Repo.get_by(Ticket, promocode: promocode) do
+      nil ->
+        nil
+
+      ticket ->
+        ticket
+        |> Ticket.update_changeset(%{status: "inactive"})
+        |> Repo.update!()
+    end
+  end
 end

@@ -57,4 +57,32 @@ defmodule Tickets.TicketTest do
     assert 6 == Promocode.active_promocodes() |> Enum.count()
     refute 10 == Promocode.active_promocodes() |> Enum.count()
   end
+
+  test "promocode_valid?/1 checks if a promocode is valid", %{attrs: attrs} do
+    ticket = attrs |> Promocode.create_ticket()
+
+    assert true ==
+             Promocode.promocode_valid?(%{
+               "distance_from_venue" => 30,
+               "promocode" => ticket.promocode
+             })
+
+    refute false ==
+             Promocode.promocode_valid?(%{
+               "distance_from_venue" => 30,
+               "promocode" => ticket.promocode
+             })
+
+    assert false ==
+             Promocode.promocode_valid?(%{
+               "distance_from_venue" => 80,
+               "promocode" => ticket.promocode
+             })
+
+    refute true ==
+             Promocode.promocode_valid?(%{
+               "distance_from_venue" => 80,
+               "promocode" => ticket.promocode
+             })
+  end
 end

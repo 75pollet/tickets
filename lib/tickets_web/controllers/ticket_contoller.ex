@@ -21,4 +21,29 @@ defmodule TicketsWeb.TicketController do
     |> put_status(:ok)
     |> render("active_promocodes.json", active_promocodes: active_promocodes)
   end
+
+  def check(conn, %{"distance_from_venue" => _distance, "promocode" => _promocode} = params) do
+    case Promocode.promocode_valid?(params) do
+      true ->
+        conn
+        |> put_status(:ok)
+        |> render("validity.json", valid: "true")
+
+      false ->
+        conn
+        |> put_status(:ok)
+        |> render("validity.json", valid: "false")
+
+      nil ->
+        conn
+        |> put_status(:ok)
+        |> render("validity.json", valid: "false", reason: "promocode doesn't exist")
+    end
+  end
+
+  def check(conn, _params) do
+    conn
+    |> put_status(422)
+    |> render("validity.json", valid: "false", reason: "wrong arguments given")
+  end
 end

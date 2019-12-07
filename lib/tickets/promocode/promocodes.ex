@@ -49,4 +49,15 @@ defmodule Tickets.Promocode do
     q = from t in Ticket, where: t.status == "active", select: t.promocode
     Repo.all(q)
   end
+
+  @doc """
+  checks for the validity of a promocode
+  """
+  @spec promocode_valid?(map()) :: boolean | nil
+  def promocode_valid?(%{"distance_from_venue" => distance, "promocode" => promocode}) do
+    case Repo.get_by(Ticket, promocode: promocode) do
+      nil -> nil
+      code -> code.radius >= distance
+    end
+  end
 end

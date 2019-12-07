@@ -12,5 +12,6 @@ defmodule TicketsWeb.Router do
     get "/promocodes", TicketController, :index
     get "/promocodes/active", TicketController, :active
     get "/promocode/check_validity", TicketController, :check
+    put "/promocode/deactivate/:promocode", TicketController, :edit
   end
 end

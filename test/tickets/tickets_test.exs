@@ -85,4 +85,15 @@ defmodule Tickets.TicketTest do
                "promocode" => ticket.promocode
              })
   end
+
+  test "promocode can be deactivated", %{attrs: attrs} do
+    ticket = attrs |> Promocode.create_ticket()
+
+    Promocode.deactivate_ticket(ticket.promocode)
+
+    ticket = Repo.get_by(Ticket, promocode: ticket.promocode)
+
+    refute "active" == ticket.status
+    assert "inactive" == ticket.status
+  end
 end

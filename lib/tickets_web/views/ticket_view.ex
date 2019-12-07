@@ -28,4 +28,8 @@ defmodule TicketsWeb.TicketView do
   def render("validity.json", %{valid: "false"}) do
     %{valid: "false"}
   end
+
+  def render("deactivate.json", %{status: "successful", data: ticket}) do
+    %{status: "successful", data: ticket |> Map.from_struct() |> Map.drop([:__meta__])}
+  end
 end

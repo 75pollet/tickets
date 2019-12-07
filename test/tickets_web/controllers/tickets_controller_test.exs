@@ -1,6 +1,6 @@
 defmodule Tickets.TicketControllerTest do
   use TicketsWeb.ConnCase
-
+  alias Tickets.Promocode
   alias TicketsWeb.TicketView
 
   setup do
@@ -12,7 +12,7 @@ defmodule Tickets.TicketControllerTest do
       "number_of_tickets" => 50
     }
 
-    [attrs: attrs]
+    [attrs: attrs, ticket: Promocode.create_ticket(attrs)]
   end
 
   test "create renders codes details", %{conn: conn, attrs: attrs} do
@@ -45,6 +45,40 @@ defmodule Tickets.TicketControllerTest do
 
     assert json_response(conn, 200) ==
              render_json(TicketView, "active_promocodes.json", conn.assigns)
+  end
+
+  test "the validity of a promocode can be checked given the correct attributes", %{
+    conn: conn,
+    ticket: ticket
+  } do
+    conn =
+      get(
+        conn,
+        Routes.ticket_path(conn, :check, %{
+          "distance_from_venue" => 40,
+          "promocode" => ticket.promocode
+        })
+      )
+
+    assert json_response(conn, 200) ==
+             render_json(TicketView, "validity.json", conn.assigns)
+  end
+
+  test "if distance is greater than the promocode radius the promocode is invalid", %{
+    conn: conn,
+    ticket: ticket
+  } do
+    conn =
+      get(
+        conn,
+        Routes.ticket_path(conn, :check, %{
+          "distance_from_venue" => 70,
+          "promocode" => ticket.promocode
+        })
+      )
+
+    assert json_response(conn, 200) ==
+             render_json(TicketView, "validity.json", conn.assigns)
   end
 
   defp render_json(module, template, assigns) do

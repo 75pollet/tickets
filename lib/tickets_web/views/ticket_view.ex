@@ -16,4 +16,16 @@ defmodule TicketsWeb.TicketView do
   def render("active_promocodes.json", %{active_promocodes: active_promocodes}) do
     active_promocodes
   end
+
+  def render("validity.json", %{valid: "true"}) do
+    %{valid: "true"}
+  end
+
+  def render("validity.json", %{valid: "false", reason: reason}) do
+    %{valid: "false", reason: reason}
+  end
+
+  def render("validity.json", %{valid: "false"}) do
+    %{valid: "false"}
+  end
 end
